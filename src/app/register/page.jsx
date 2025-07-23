@@ -1,20 +1,17 @@
 'use client';
-import { useState , useContext } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { UserContext } from '../context/UserContext';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const router = useRouter();
 
-  const { login } = useContext(UserContext);
-
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const res = await fetch('/api/login', {
+    const res = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -23,10 +20,10 @@ export default function LoginPage() {
     const data = await res.json();
 
     if (res.ok) {
-      setMessage('Login exitoso');
-      localStorage.setItem('deckcheckUser', JSON.stringify(data.user));
-      login(data.user);
-      setTimeout(() => router.push('/'), 500);
+      setMessage('Registro exitoso, redirigiendo...');
+      setTimeout(() => {
+        router.push('/login');
+      }, 1000);
     } else {
       setMessage(data.error || 'Error desconocido');
     }
@@ -34,11 +31,11 @@ export default function LoginPage() {
 
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <h2>Login</h2>
+      <h2>Registro</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Usuario"
+          placeholder="Nombre de usuario"
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
@@ -52,7 +49,7 @@ export default function LoginPage() {
           required
           style={{ display: 'block', marginBottom: 10, width: '100%' }}
         />
-        <button type="submit">Entrar</button>
+        <button type="submit">Registrar</button>
       </form>
       {message && <p>{message}</p>}
     </div>

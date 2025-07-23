@@ -16,7 +16,7 @@ function RootContent({ children }) {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        <h1 style={{ margin: 0 }}>DeckCheck</h1>
+        <Link href="/" style={{ color: '#fff', textDecoration: 'none' }}><h1 style={{ margin: 0 }}>DeckCheck</h1> </Link>
         <nav style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           {user ? (
             <>
