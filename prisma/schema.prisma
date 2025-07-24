@@ -13,3 +13,41 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+
+model Card {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  cost        Int
+  attack      Int?
+  isBanned    Boolean   @default(false)
+  deckLimit   Int       @default(3)
+  createdAt   DateTime  @default(now())
+  imageUrl    String? 
+  raceId      Int?
+  editionId   Int
+  typeId      Int
+
+  race        Race?     @relation(fields: [raceId], references: [id])
+  edition     Edition   @relation(fields: [editionId], references: [id])
+  type        CardType  @relation(fields: [typeId], references: [id])
+}
+
+model Race {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  cards Card[]
+}
+
+model Edition {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  cards Card[]
+}
+
+model CardType {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  cards Card[]
+}

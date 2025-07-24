@@ -16,15 +16,27 @@ function RootContent({ children }) {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        <Link href="/" style={{ color: '#fff', textDecoration: 'none' }}><h1 style={{ margin: 0 }}>DeckCheck</h1> </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <Link href="/" style={{ color: '#fff', textDecoration: 'none' }}>
+            <h1 style={{ margin: 0 }}>DeckCheck</h1>
+          </Link>
+
+          {/* 📌 Agregamos accesos a Cartas */}
+          <Link href="/cards" style={{ color: '#61dafb', textDecoration: 'none' }}>
+            Ver Cartas
+          </Link>
+          <Link href="/cards/new" style={{ color: '#61dafb', textDecoration: 'none' }}>
+            Crear Carta
+          </Link>
+        </div>
+
         <nav style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           {user ? (
             <>
-              <span>Hola, {user.username}</span>
+              <span style={{ color: '#fff' }}>Hola, {user.username}</span>
               <button
                 onClick={() => {
                   logout();
-                  // redirige a login
                   window.location.href = '/login';
                 }}
                 style={{
@@ -56,6 +68,7 @@ function RootContent({ children }) {
           )}
         </nav>
       </header>
+
       <main style={{ padding: 20, minHeight: '100vh' }}>
         {children}
       </main>
@@ -66,7 +79,12 @@ function RootContent({ children }) {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body style={{ margin: 0, fontFamily: 'Arial, sans-serif', backgroundColor: '#282c34', color: '#fff' }}>
+      <body style={{
+        margin: 0,
+        fontFamily: 'Arial, sans-serif',
+        backgroundColor: '#282c34',
+        color: '#fff'
+      }}>
         <UserProvider>
           <RootContent>{children}</RootContent>
         </UserProvider>
