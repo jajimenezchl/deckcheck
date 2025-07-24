@@ -38,22 +38,15 @@ export default function CardList() {
                                     <img
                                         src={card.imageUrl}
                                         alt={card.name}
-                                        style={{
-                                            width: '130px',
-                                            height: 'auto',
-                                            display: 'block',
-                                            margin: '0 auto',
-                                            borderRadius: '4px',
-                                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                                        }}
-                                          className="w-24 h-auto mx-auto rounded shadow transition-transform duration-200 hover:scale-125"
+                                        width={96}
+                                        className="w-24 h-auto mx-auto rounded shadow transition-transform duration-200 hover:scale-125"
                                     />
                                 ) : (
                                     "-"
                                 )}
                             </td>
                             <td className="border p-2">{card.name}</td>
-                            <td className="border p-2">{card.type?.name || "-"}</td>
+                            <td className="border p-2 flex items-center">{card.type?.name || "-"}</td>
                             <td className="border p-2">{card.race?.name || "-"}</td>
                             <td className="border p-2">{card.edition?.name}</td>
                             <td className="border p-2 text-center">{card.cost}</td>

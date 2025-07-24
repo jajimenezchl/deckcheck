@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import { UserProvider, UserContext } from './context/UserContext';
+ 
 
 function RootContent({ children }) {
   const { user, logout } = useContext(UserContext);
@@ -17,7 +18,7 @@ function RootContent({ children }) {
         alignItems: 'center'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link href="/" style={{ color: '#fff', textDecoration: 'none' }}>
+          <Link href="/" style={{ color: '#fff', textDecoration: 'none' }} className="bg-red-500">
             <h1 style={{ margin: 0 }}>DeckCheck</h1>
           </Link>
 
@@ -62,6 +63,7 @@ function RootContent({ children }) {
                 borderRadius: 4,
                 cursor: 'pointer',
               }}
+              className='bg-red-500'
             >
               Login
             </Link>
