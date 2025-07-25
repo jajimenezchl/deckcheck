@@ -21,25 +21,14 @@ export default function CreateCardForm() {
   });
 
   useEffect(() => {
-    fetch("/api/races")
-      .then((res) => res.json())
-      .then(setRaces)
-      .catch(() => setRaces([]));
-
-    fetch("/api/editions")
-      .then((res) => res.json())
-      .then(setEditions)
-      .catch(() => setEditions([]));
-
-    fetch("/api/cardTypes")
-      .then((res) => res.json())
-      .then(setTypes)
-      .catch(() => setTypes([]));
+    fetch("/api/races").then(res => res.json()).then(setRaces).catch(() => setRaces([]));
+    fetch("/api/editions").then(res => res.json()).then(setEditions).catch(() => setEditions([]));
+    fetch("/api/cardTypes").then(res => res.json()).then(setTypes).catch(() => setTypes([]));
   }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value
     }));
@@ -82,9 +71,15 @@ export default function CreateCardForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 space-y-4 border rounded">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl mx-auto mt-10 p-6 bg-zinc-900 rounded-lg shadow-lg space-y-5 text-white"
+    >
+      <h2 className="text-2xl font-bold text-center mb-4">Crear Nueva Carta</h2>
+
+      {/* Nombre */}
       <div>
-        <label htmlFor="name" className="block mb-1 font-semibold">Nombre</label>
+        <label htmlFor="name" className="block mb-1">Nombre</label>
         <input
           type="text"
           id="name"
@@ -92,23 +87,25 @@ export default function CreateCardForm() {
           value={form.name}
           onChange={handleChange}
           required
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
+      {/* Descripción */}
       <div>
-        <label htmlFor="description" className="block mb-1 font-semibold">Descripción</label>
+        <label htmlFor="description" className="block mb-1">Descripción</label>
         <textarea
           id="description"
           name="description"
           value={form.description}
           onChange={handleChange}
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
+      {/* Coste */}
       <div>
-        <label htmlFor="cost" className="block mb-1 font-semibold">Coste</label>
+        <label htmlFor="cost" className="block mb-1">Coste</label>
         <input
           type="number"
           id="cost"
@@ -117,12 +114,13 @@ export default function CreateCardForm() {
           onChange={handleChange}
           min="0"
           required
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
+      {/* Ataque */}
       <div>
-        <label htmlFor="attack" className="block mb-1 font-semibold">Ataque</label>
+        <label htmlFor="attack" className="block mb-1">Ataque</label>
         <input
           type="number"
           id="attack"
@@ -130,25 +128,26 @@ export default function CreateCardForm() {
           value={form.attack}
           onChange={handleChange}
           min="0"
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      <div>
-        <label htmlFor="isBanned" className="inline-flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="isBanned"
-            name="isBanned"
-            checked={form.isBanned}
-            onChange={handleChange}
-          />
-          <span>¿Baneada?</span>
-        </label>
+      {/* ¿Baneada? */}
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="isBanned"
+          name="isBanned"
+          checked={form.isBanned}
+          onChange={handleChange}
+          className="accent-red-500"
+        />
+        <label htmlFor="isBanned">¿Baneada?</label>
       </div>
 
+      {/* Límite por mazo */}
       <div>
-        <label htmlFor="deckLimit" className="block mb-1 font-semibold">Límite por mazo</label>
+        <label htmlFor="deckLimit" className="block mb-1">Límite por mazo</label>
         <input
           type="number"
           id="deckLimit"
@@ -158,12 +157,13 @@ export default function CreateCardForm() {
           min="1"
           max="10"
           required
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
+      {/* Imagen */}
       <div>
-        <label htmlFor="imageUrl" className="block mb-1 font-semibold">URL Imagen</label>
+        <label htmlFor="imageUrl" className="block mb-1">URL de Imagen</label>
         <input
           type="text"
           id="imageUrl"
@@ -171,69 +171,67 @@ export default function CreateCardForm() {
           value={form.imageUrl}
           onChange={handleChange}
           placeholder="https://..."
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
+      {/* Raza */}
       <div>
-        <label htmlFor="raceId" className="block mb-1 font-semibold">Raza</label>
+        <label htmlFor="raceId" className="block mb-1">Raza</label>
         <select
           id="raceId"
           name="raceId"
           value={form.raceId}
           onChange={handleChange}
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
         >
           <option value="">-- Ninguna --</option>
           {races.map((race) => (
-            <option key={race.id} value={race.id}>
-              {race.name}
-            </option>
+            <option key={race.id} value={race.id}>{race.name}</option>
           ))}
         </select>
       </div>
 
+      {/* Edición */}
       <div>
-        <label htmlFor="editionId" className="block mb-1 font-semibold">Edición</label>
+        <label htmlFor="editionId" className="block mb-1">Edición</label>
         <select
           id="editionId"
           name="editionId"
           value={form.editionId}
           onChange={handleChange}
           required
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
         >
           <option value="">-- Selecciona --</option>
           {editions.map((edition) => (
-            <option key={edition.id} value={edition.id}>
-              {edition.name}
-            </option>
+            <option key={edition.id} value={edition.id}>{edition.name}</option>
           ))}
         </select>
       </div>
 
+      {/* Tipo */}
       <div>
-        <label htmlFor="typeId" className="block mb-1 font-semibold">Tipo</label>
+        <label htmlFor="typeId" className="block mb-1">Tipo</label>
         <select
           id="typeId"
           name="typeId"
           value={form.typeId}
           onChange={handleChange}
           required
-          className="w-full border rounded px-2 py-1"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
         >
           <option value="">-- Selecciona --</option>
           {types.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.name}
-            </option>
+            <option key={type.id} value={type.id}>{type.name}</option>
           ))}
         </select>
       </div>
 
+      {/* Botón */}
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition"
       >
         Crear Carta
       </button>

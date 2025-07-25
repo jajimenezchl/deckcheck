@@ -3,51 +3,43 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import { UserProvider, UserContext } from './context/UserContext';
- 
+import './globals.css';
 
 function RootContent({ children }) {
   const { user, logout } = useContext(UserContext);
 
   return (
     <>
-      <header style={{
-        padding: 15,
-        backgroundColor: '#222',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link href="/" style={{ color: '#fff', textDecoration: 'none' }} className="bg-red-500">
-            <h1 style={{ margin: 0 }}>DeckCheck</h1>
+      <header className="p-4 bg-zinc-900 flex justify-between items-center">
+        <div className="flex gap-4 items-center">
+          <Link href="/" className="text-white no-underline">
+            <h1 className="m-0 text-xl font-bold">DeckCheck</h1>
           </Link>
 
-          {/* 📌 Agregamos accesos a Cartas */}
-          <Link href="/cards" style={{ color: '#61dafb', textDecoration: 'none' }}>
+          <Link href="/cards" className="text-sky-400 hover:underline">
             Ver Cartas
           </Link>
-          <Link href="/cards/new" style={{ color: '#61dafb', textDecoration: 'none' }}>
+
+          <Link href="/cards/new" className="text-sky-400 hover:underline">
             Crear Carta
+          </Link>
+
+
+          <Link href="/cards/crap" className="text-sky-400 hover:underline">
+            Crap Carta
           </Link>
         </div>
 
-        <nav style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <nav className="flex gap-3 items-center">
           {user ? (
             <>
-              <span style={{ color: '#fff' }}>Hola, {user.username}</span>
+              <span className="text-white">Hola, {user.username}</span>
               <button
                 onClick={() => {
                   logout();
                   window.location.href = '/login';
                 }}
-                style={{
-                  padding: '6px 12px',
-                  backgroundColor: '#ff6b6b',
-                  border: 'none',
-                  borderRadius: 4,
-                  cursor: 'pointer',
-                  color: '#fff',
-                }}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
               >
                 Logout
               </button>
@@ -55,15 +47,7 @@ function RootContent({ children }) {
           ) : (
             <Link
               href="/login"
-              style={{
-                color: '#61dafb',
-                textDecoration: 'none',
-                padding: '8px 15px',
-                backgroundColor: '#555',
-                borderRadius: 4,
-                cursor: 'pointer',
-              }}
-              className='bg-red-500'
+              className="px-4 py-2 bg-gray-600 text-sky-400 rounded hover:bg-gray-700 transition"
             >
               Login
             </Link>
@@ -71,7 +55,7 @@ function RootContent({ children }) {
         </nav>
       </header>
 
-      <main style={{ padding: 20, minHeight: '100vh' }}>
+      <main className="p-5 min-h-screen bg-zinc-800 text-white">
         {children}
       </main>
     </>
@@ -81,12 +65,7 @@ function RootContent({ children }) {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body style={{
-        margin: 0,
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#282c34',
-        color: '#fff'
-      }}>
+      <body className="m-0 font-sans bg-zinc-800 text-white">
         <UserProvider>
           <RootContent>{children}</RootContent>
         </UserProvider>
